@@ -10,6 +10,9 @@ const app = express();
 // Public dir
 app.use( express.static('public') );
 
+// Body read and parse 
+app.use( express.json() );
+
 //Routes
 app.use('/api/auth', require('./routes/auth') );
 // TODO: CRUD: events

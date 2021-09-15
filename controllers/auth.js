@@ -3,16 +3,27 @@ const response = require('express');
 
 
 const newUser = (req, res = response) => {
+
+    const { name, email, password } = req.body;
+
     res.json({
         ok: true,
-        msg: 'registro'
+        msg: 'registro',
+        name,
+        email,
+        password
     });
 }
 
 const loginUser = (req, res = response) => {
+
+    const { email, password } = req.body;
+
     res.json({
         ok: true,
-        msg: 'login'
+        msg: 'login',
+        email,
+        password
     })
 }
 
