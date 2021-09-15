@@ -1,12 +1,12 @@
 const response = require('express');
-
+const { validationResult } = require('express-validator');
 
 
 const newUser = (req, res = response) => {
 
     const { name, email, password } = req.body;
 
-    res.json({
+    res.status(201).json({
         ok: true,
         msg: 'registro',
         name,
