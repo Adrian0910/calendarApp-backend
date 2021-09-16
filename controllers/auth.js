@@ -2,6 +2,7 @@ const response = require('express');
 const bcrypt = require('bcryptjs');
 const Usuario = require('../models/Usuario');
 const { generateJWT } = require('../helpers/jwt');
+const { request } = require('express');
 
 
 const newUser = async( req, res = response ) => {
@@ -90,10 +91,16 @@ const loginUser = async(req, res = response) => {
     }
 }
 
-const renewToken = (req, res) => {
+const renewToken = async(req, res) => {
+
+    const { uid, name } = req;
+    
+    // Generate and return a new JWT 
+    const token = await generateJWT( uid, name );
+
     res.json({
         ok: true,
-        msg: 'renew'
+        token
     })
 }
 
