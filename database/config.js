@@ -1,11 +1,13 @@
 
 const mongoose = require('mongoose');
 
+const dir = process.env.DB_CNN
 
 const dbConnection = async() => {
 
+    console.log(dir.toString())
     try {
-        await mongoose.connect( process.env.DB_CNN , {
+        await mongoose.connect( dir.toString() , {
             useNewUrlParser: true,
         });
 
