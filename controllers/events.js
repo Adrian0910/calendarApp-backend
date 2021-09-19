@@ -22,7 +22,7 @@ const createEvent = async(req, res = response) => {
         event.user = req.uid;
         const eventSaveDB = await event.save();
 
-        res.json({
+        return res.json({
             ok: true,
             event: eventSaveDB
         })
@@ -65,7 +65,7 @@ const updateEvent = async(req, res = response) => {
 
         const eventUpdate = await Event.findByIdAndUpdate( eventId, newEvent, { new: true} );
 
-        res.json({
+        return res.json({
             ok: true,
             event: eventUpdate
         });
