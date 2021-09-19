@@ -1,8 +1,8 @@
-const response = require('express');
+const { response } = require('express');
 const bcrypt = require('bcryptjs');
 const Usuario = require('../models/Usuario');
 const { generateJWT } = require('../helpers/jwt');
-const { request } = require('express');
+
 
 
 const newUser = async( req, res = response ) => {
@@ -16,7 +16,7 @@ const newUser = async( req, res = response ) => {
         if( user ) {
             return res.status(400).json({
                 ok: false,
-                msg: 'Un usuario existe con ese correo',
+                msg: 'El usuario ya existe'
             });
         }
 
@@ -36,7 +36,7 @@ const newUser = async( req, res = response ) => {
             ok: true,
             uid: user.id,
             name: user.name,
-            token: token
+            token
         });
 
     } catch (error) {
@@ -63,7 +63,8 @@ const loginUser = async(req, res = response) => {
         }
 
     // Confirm passwords
-        const validPaswworrd = bcrypt.compareSync( password, user.password );
+        const validPaswworrd = bcrypt.compareSync( password, 
+            user.password );
 
         if( !validPaswworrd ) {
             return res.status(400).json({
@@ -91,7 +92,7 @@ const loginUser = async(req, res = response) => {
     }
 }
 
-const renewToken = async(req, res) => {
+const renewToken = async(req, res = response) => {
 
     const { uid, name } = req;
     

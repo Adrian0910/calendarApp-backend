@@ -1,26 +1,28 @@
-
 const mongoose = require('mongoose');
-
 
 
 const dbConnection = async() => {
 
-    
     try {
-        await mongoose.connect( 'mongodb+srv://mern_user:n12oPzDjCyw0K7Rm@cluster0.ln9tr.mongodb.net/mern_calendar' , {
-            useNewUrlParser: true,
+        
+        await mongoose.connect( process.env.DB_CNN , {
+            useNewUrlParser: true, 
+            useUnifiedTopology: true,
+            useCreateIndex: true
         });
-        
-        console.log('DB online');
-        
+
+        console.log('DB Online');
+
+
     } catch (error) {
         console.log(error);
-        throw new Error('Error a la hora de inicializar la DB');
+        throw new Error('Error a la hora de inicializar BD');
     }
 
+
 }
+
 
 module.exports = {
-    dbConnection,
+    dbConnection
 }
-

@@ -12,7 +12,7 @@ const validateJWT = ( req, res = response, next ) => {
         return res.status(401).json({
             ok: false,
             msg: 'No hay token en la petición',
-        })
+        });
     }
 
     try {
@@ -38,6 +38,6 @@ const validateJWT = ( req, res = response, next ) => {
 
 
 module.exports = {
-    validateJWT,
+    validateJWT
 };
 

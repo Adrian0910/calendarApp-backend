@@ -22,6 +22,6 @@ const isDate = ( value ) => {
 }
 
 module.exports = {
-    isDate,
+    isDate
 };
 

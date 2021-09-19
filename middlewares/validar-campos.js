@@ -19,7 +19,7 @@ const fieldValidation = (req, res = response, next) => {
 }
 
 module.exports = {
-    fieldValidation,
+    fieldValidation
 }
 
 
