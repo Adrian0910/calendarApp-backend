@@ -1,124 +1,131 @@
-
 const { response } = require('express');
 const Event = require('../models/Events');
 
+const getEvent = async( req, res = response ) => {
 
-const getEvent = async(req, res = response) => {
+    const eventos = await Event.find()
+                                .populate('user','name');
 
-    const events = await Event.find().populate('user', 'name');
-
-     res.json({
+    res.json({
         ok: true,
-        events,
+        eventos
     });
 }
 
-const createEvent = async(req, res = response) => {
+const createEvent = async ( req, res = response ) => {
 
-    const event = new Event( req.body );
-    
+    const evento = new Event( req.body );
+
     try {
 
-        event.user = req.uid;
-        const eventSaveDB = await event.save();
+        evento.user = req.uid;
+        
+        const eventoGuardado = await evento.save();
 
         res.json({
             ok: true,
-            event: eventSaveDB
+            evento: eventoGuardado
         })
-        
+
+
     } catch (error) {
         console.log(error)
         res.status(500).json({
             ok: false,
-            msg: 'Hable con el administrador...'
+            msg: 'Hable con el administrador'
         });
     }
 }
 
-const updateEvent = async(req, res = response) => {
-
-    const eventId = req.params.id;
+const updateEvent = async( req, res = response ) => {
+    
+    const eventoId = req.params.id;
     const uid = req.uid;
 
     try {
-        const event = await Event.findById( eventId );
 
-        if( !event ){
+        const evento = await Event.findById( eventoId );
+
+        if ( !evento ) {
             return res.status(404).json({
                 ok: false,
-                msg: "Evento no existe por ese id"
+                msg: 'Evento no existe por ese id'
             });
         }
 
-        if( event.user.toString() !== uid ) {
+        if ( evento.user.toString() !== uid ) {
             return res.status(401).json({
                 ok: false,
-                msg: "No tiene privilegio para editar este evento"
+                msg: 'No tiene privilegio de editar este evento'
             });
         }
 
-        const newEvent = {
+        const nuevoEvento = {
             ...req.body,
             user: uid
         }
 
-        const eventUpdate = await Event.findByIdAndUpdate( eventId, newEvent, { new: true} );
+        const eventoActualizado = await Event.findByIdAndUpdate( eventoId, nuevoEvento, { new: true } );
 
         res.json({
             ok: true,
-            event: eventUpdate
+            evento: eventoActualizado
         });
+
         
     } catch (error) {
-        console.log(error)
+        console.log(error);
         res.status(500).json({
             ok: false,
-            msg: "Hable con el administrador"
+            msg: 'Hable con el administrador'
         });
     }
+
 }
 
+const deleteEvent = async( req, res = response ) => {
 
-const deleteEvent = async(req, res = response) => {
-
-    const eventId = req.params.id;
+    const eventoId = req.params.id;
     const uid = req.uid;
 
     try {
-        const event = await Event.findById( eventId );
 
-        if( !event ){
+        const evento = await Event.findById( eventoId );
+
+        if ( !evento ) {
             return res.status(404).json({
                 ok: false,
-                msg: "Evento no existe por ese id"
+                msg: 'Evento no existe por ese id'
             });
         }
 
-        if( event.user.toString() !== uid ) {
+        if ( evento.user.toString() !== uid ) {
             return res.status(401).json({
                 ok: false,
-                msg: "No tiene privilegio para eliminar este evento"
+                msg: 'No tiene privilegio de eliminar este evento'
             });
         }
-        await Event.findByIdAndDelete( eventId );
+
+
+        await Event.findByIdAndDelete( eventoId );
 
         res.json({ ok: true });
+
         
     } catch (error) {
-        console.log(error)
+        console.log(error);
         res.status(500).json({
             ok: false,
-            msg: "Hable con el administrador"
+            msg: 'Hable con el administrador'
         });
     }
+
 }
 
+
 module.exports = {
-    getEvent,
-    createEvent,
-    updateEvent,
-    deleteEvent,
-};
-
-
+   getEvent,
+   createEvent,
+   updateEvent,
+   deleteEvent
+}
