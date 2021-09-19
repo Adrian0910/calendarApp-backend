@@ -20,7 +20,7 @@ const dbConnection = async() => {
 
 }
 
-module.export = {
+module.exports = {
     dbConnection,
 }
 
