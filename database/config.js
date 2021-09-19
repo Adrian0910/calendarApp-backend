@@ -1,6 +1,6 @@
 
 const mongoose = require('mongoose');
-
+require('dotenv').config({ path: 'DB_CNN' });
 
 const dbConnection = async() => {
 
