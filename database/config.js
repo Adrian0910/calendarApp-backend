@@ -7,7 +7,7 @@ const dbConnection = async() => {
 
     
     try {
-        await mongoose.connect( process.env.DB_CNN , {
+        await mongoose.connect( 'mongodb+srv://mern_user:n12oPzDjCyw0K7Rm@cluster0.ln9tr.mongodb.net/mern_calendar' , {
             useNewUrlParser: true,
         });
         
