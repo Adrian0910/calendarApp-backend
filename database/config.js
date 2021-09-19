@@ -1,16 +1,16 @@
 
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-const dir = process.env.DB_CNN
 
 const dbConnection = async() => {
 
-    console.log(dir.toString())
+    
     try {
-        await mongoose.connect( dir.toString() , {
+        await mongoose.connect( process.env.DB_CNN , {
             useNewUrlParser: true,
         });
-
+        
         console.log('DB online');
         
     } catch (error) {
